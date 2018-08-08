@@ -9,13 +9,7 @@ import '@vaadin/vaadin-checkbox/vaadin-checkbox.js';
 import '@vaadin/vaadin-text-field/vaadin-text-area.js';
 import '@vaadin/vaadin-text-field/vaadin-text-field.js';
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
-import '@vaadin/vaadin-dropdown-menu/vaadin-dropdown-menu.js';
-import '@vaadin/vaadin-list-box/vaadin-list-box.js';
-import '@vaadin/vaadin-item/vaadin-item.js';
-import '@vaadin/vaadin-icons/vaadin-icons';
 import '@vaadin/vaadin-progress-bar/vaadin-progress-bar.js';
-
-import '@polymer/iron-icon';
 
 import { addComment } from '../actions/comment.js';
 import { getAgencies } from '../actions/agencies.js';
@@ -71,16 +65,6 @@ const ComponentStyles = html`
       left: 0;
       right: 0;
     }
-
-    form {
-      display: flex;
-      flex-direction: column;
-    }
-
-    vaadin-button {
-       margin: 8px 0;
-       align-self: flex-end;
-     }
    </style>
 `;
 
@@ -94,19 +78,13 @@ class MyComment extends connect(store)(PageViewElement) {
    return html`
     ${ComponentStyles}
     ${CheckboxStyles}
-    
+    <vaadin-progress-bar hidden?="${!props.isLoading}" indeterminate="${props.isLoading}" value="0"></vaadin-progress-bar>
     <section>
-      <vaadin-progress-bar hidden?="${!props.isLoading}" indeterminate="${props.isLoading}" value="0"></vaadin-progress-bar>
-      <p>
-        <vaadin-combo-box disabled="${props.isLoading}" item-value-path="id" item-label-path="AgencyName" items="${props.agencies}" placeholder="Agency"></vaadin-combo-box>
-        <vaadin-date-picker disabled="${props.isLoading}" placeholder="Date"></vaadin-date-picker>
-        <vaadin-text-area disabled="${props.isLoading}" placeholder="Comment"></vaadin-text-area>
-        <vaadin-checkbox disabled="${props.isLoading}">Is Completed?</vaadin-checkbox>
-        <vaadin-button disabled="${props.isLoading}" on-click="${() => this._submit()}">
-          <iron-icon slot="prefix" icon="vaadin:check"></iron-icon>
-          SAVE
-        </vaadin-button>
-      </p>
+      <vaadin-combo-box disabled="${props.isLoading}" item-value-path="id" item-label-path="AgencyName" items="${props.agencies}" placeholder="Agency"></vaadin-combo-box>
+      <vaadin-date-picker disabled="${props.isLoading}" placeholder="Date"></vaadin-date-picker>
+      <vaadin-text-area disabled="${props.isLoading}" placeholder="Comment"></vaadin-text-area>
+      <vaadin-checkbox disabled="${props.isLoading}">Is Completed?</vaadin-checkbox>
+      <vaadin-button disabled="${props.isLoading}" on-click="${() => this._submit()}">SAVE</vaadin-button>
     </section>
   `;
   }

@@ -1,5 +1,4 @@
 import {
-  UPDATE_PAGE,
   UPDATE_OFFLINE,
   UPDATE_ERROR,
   UPDATE_LOADING
@@ -14,11 +13,6 @@ const app = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: action.isLoading
       }
-    case UPDATE_PAGE:
-      return {
-        ...state,
-        page: action.page
-      };
     case UPDATE_OFFLINE:
       return {
         ...state,

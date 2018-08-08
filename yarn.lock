@@ -7271,7 +7271,7 @@ polymer-bundler@^4.0.0, polymer-bundler@^4.0.1:
     source-map "^0.5.6"
     vscode-uri "^1.0.1"
 
-polymer-cli@^1.7.4:
+polymer-cli@^1.7.6:
   version "1.7.7"
   resolved "https://registry.yarnpkg.com/polymer-cli/-/polymer-cli-1.7.7.tgz#5e65dcd2f7d8e500b7f3448612096c5514bbda23"
   dependencies:

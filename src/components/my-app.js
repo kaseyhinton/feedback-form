@@ -1,21 +1,22 @@
 import { LitElement, html } from '@polymer/lit-element';
 import { setPassiveTouchGestures } from '@polymer/polymer/lib/utils/settings.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
-import { installMediaQueryWatcher } from 'pwa-helpers/media-query.js';
 import { installOfflineWatcher } from 'pwa-helpers/network.js';
 import { installRouter } from 'pwa-helpers/router.js';
 import { updateMetadata } from 'pwa-helpers/metadata.js';
 
 import { store } from '../store.js';
 
+import './my-feedback-form';
+import './my-feedback-list';
+
 import {
   navigate,
-  updateOffline,
-  updateLayout
+  updateOffline
 } from '../actions/app.js';
 
 class MyApp extends connect(store)(LitElement) {
-  _render({appTitle, _page, _offline}) {
+  _render({appTitle, _offline}) {
     // Anything that's related to rendering should be done in here.
     return html`
     <style>
@@ -92,18 +93,16 @@ class MyApp extends connect(store)(LitElement) {
 
     <header>
       <h1>${appTitle}</h1>
-      <nav class="toolbar-list">
-      </nav>
     </header>
 
     <!-- Main content -->
     <main role="main" class="main-content">
-      <my-comment class="page" active?="${_page === 'view1'}"></my-comment>
-      <my-view404 class="page" active?="${_page === 'view404'}"></my-view404>
+        <my-feedback-form></my-feedback-form>
+        <my-feedback-list></my-feedback-list>
     </main>
 
     <footer>
-      <p>&copy; Leavitt Software Solutions</p>
+      <p>Feedback 2018</p>
     </footer>
     `;
   }
@@ -111,31 +110,16 @@ class MyApp extends connect(store)(LitElement) {
   static get properties() {
     return {
       appTitle: String,
-      _page: String,
       _offline: Boolean
     }
   }
 
   _firstRendered() {
-    installRouter((location) => store.dispatch(navigate(window.decodeURIComponent(location.pathname))));
+    // installRouter((location) => store.dispatch(navigate(window.decodeURIComponent(location.pathname))));
     installOfflineWatcher((offline) => store.dispatch(updateOffline(offline)));
-    installMediaQueryWatcher(`(min-width: 460px)`,
-        (matches) => store.dispatch(updateLayout(matches)));
-  }
-
-  _didRender(properties, changeList) {
-    if ('_page' in changeList) {
-      const pageTitle = properties.appTitle + ' - ' + changeList._page;
-      updateMetadata({
-          title: pageTitle,
-          description: pageTitle
-          // This object also takes an image property, that points to an img src.
-      });
-    }
   }
 
   _stateChanged(state) {
-    this._page = state.app.page;
     this._offline = state.app.offline;
   }
 }

@@ -1,7 +1,3 @@
-import { html,LitElement } from '@polymer/lit-element';
-import { connect } from 'pwa-helpers/connect-mixin.js';
-import { store } from '../store.js';
-
 import '@vaadin/vaadin-button/vaadin-button.js';
 import '@vaadin/vaadin-date-picker/vaadin-date-picker.js';
 import '@vaadin/vaadin-text-field/vaadin-text-area.js';
@@ -9,14 +5,15 @@ import '@vaadin/vaadin-text-field/vaadin-text-field.js';
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
 import '@vaadin/vaadin-progress-bar/vaadin-progress-bar.js';
 
-import { addFeedback } from '../actions/feedback.js';
-import { updateLoading } from '../actions/app.js';
+import {html, LitElement} from '@polymer/lit-element';
+import {connect} from 'pwa-helpers/connect-mixin.js';
 
+import {updateLoading} from '../actions/app.js';
+import {addFeedback} from '../actions/feedback.js';
 import feedback from '../reducers/feedback.js';
+import {store} from '../store.js';
 
-store.addReducers({
-  feedback
-});
+store.addReducers({feedback});
 
 const ComponentStyles = html`
 <style>
@@ -43,19 +40,21 @@ const ComponentStyles = html`
    </style>
 `;
 
-class MyFeedbackForm extends connect(store)(LitElement) {
-  constructor(){
+class MyFeedbackForm extends connect
+(store)(LitElement) {
+  constructor() {
     super();
     this.types = ['Issue', 'Feature', 'Comment'];
   }
 
-  static get properties() { return {
-    isLoading: Boolean,
-    types: Array
-  }};
+  static get properties() {
+    return {
+      isLoading: Boolean, types: Array
+    }
+  };
 
   _render(props) {
-   return html`
+    return html`
     ${ComponentStyles}
     <vaadin-progress-bar hidden?="${!props.isLoading}" indeterminate="${props.isLoading}" value="0"></vaadin-progress-bar>
     <section>
@@ -67,14 +66,14 @@ class MyFeedbackForm extends connect(store)(LitElement) {
   `;
   }
 
-  _submit(){ 
+  _submit() {
     store.dispatch(updateLoading(true));
-    
-    setTimeout(()=> {
+
+    setTimeout(() => {
       const feedback = this._createFeedback();
-       store.dispatch(addFeedback(feedback));
-       store.dispatch(updateLoading(false));
-       this._resetForm();
+      store.dispatch(addFeedback(feedback));
+      store.dispatch(updateLoading(false));
+      this._resetForm();
     }, 800);
   }
 
@@ -82,14 +81,10 @@ class MyFeedbackForm extends connect(store)(LitElement) {
     const typeElement = this.shadowRoot.querySelector('vaadin-combo-box');
     const dateElement = this.shadowRoot.querySelector('vaadin-date-picker');
     const descriptionElement = this.shadowRoot.querySelector('vaadin-text-area');
-    return {
-        Type: typeElement.value,
-        Date: dateElement.value,
-        Description: descriptionElement.value
-      }
+    return {Type: typeElement.value, Date: dateElement.value, Description: descriptionElement.value};
   }
 
-  _resetForm(){
+  _resetForm() {
     const typeElement = this.shadowRoot.querySelector('vaadin-combo-box');
     const dateElement = this.shadowRoot.querySelector('vaadin-date-picker');
     const descriptionElement = this.shadowRoot.querySelector('vaadin-text-area');

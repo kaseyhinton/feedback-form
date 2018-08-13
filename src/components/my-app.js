@@ -1,23 +1,19 @@
-import { LitElement, html } from '@polymer/lit-element';
-import { setPassiveTouchGestures } from '@polymer/polymer/lib/utils/settings.js';
-import { connect } from 'pwa-helpers/connect-mixin.js';
-import { installOfflineWatcher } from 'pwa-helpers/network.js';
-import { installRouter } from 'pwa-helpers/router.js';
-import { updateMetadata } from 'pwa-helpers/metadata.js';
-
-import { store } from '../store.js';
-
 import './my-feedback-form';
 import './my-feedback-list';
 
-import {
-  navigate,
-  updateOffline
-} from '../actions/app.js';
+import {html, LitElement} from '@polymer/lit-element';
+import {setPassiveTouchGestures} from '@polymer/polymer/lib/utils/settings.js';
+import {connect} from 'pwa-helpers/connect-mixin.js';
+import {updateMetadata} from 'pwa-helpers/metadata.js';
+import {installOfflineWatcher} from 'pwa-helpers/network.js';
+import {installRouter} from 'pwa-helpers/router.js';
 
-class MyApp extends connect(store)(LitElement) {
+import {navigate, updateOffline} from '../actions/app.js';
+import {store} from '../store.js';
+
+class MyApp extends connect
+(store)(LitElement) {
   _render({appTitle, _offline}) {
-    // Anything that's related to rendering should be done in here.
     return html`
     <style>
       :host {
@@ -56,7 +52,6 @@ class MyApp extends connect(store)(LitElement) {
         font-weight: bold;
       }
 
-      /* Workaround for IE11 displaying <main> as inline */
       main {
         display: block;
       }
@@ -77,14 +72,11 @@ class MyApp extends connect(store)(LitElement) {
         text-align: center;
       }
 
-      /* Wide layout */
       @media (min-width: 460px) {
         header {
           flex-direction: row;
         }
 
-        /* The drawer button isn't shown in the wide layout, so we don't
-        need to offset the title */
         [main-title] {
           padding-right: 0px;
         }
@@ -95,10 +87,9 @@ class MyApp extends connect(store)(LitElement) {
       <h1>${appTitle}</h1>
     </header>
 
-    <!-- Main content -->
     <main role="main" class="main-content">
-        <my-feedback-form></my-feedback-form>
-        <my-feedback-list></my-feedback-list>
+      <my-feedback-form></my-feedback-form>
+      <my-feedback-list></my-feedback-list>
     </main>
 
     <footer>
@@ -109,13 +100,13 @@ class MyApp extends connect(store)(LitElement) {
 
   static get properties() {
     return {
-      appTitle: String,
-      _offline: Boolean
+      appTitle: String, _offline: Boolean
     }
   }
 
   _firstRendered() {
-    // installRouter((location) => store.dispatch(navigate(window.decodeURIComponent(location.pathname))));
+    // installRouter((location) =>
+    // store.dispatch(navigate(window.decodeURIComponent(location.pathname))));
     installOfflineWatcher((offline) => store.dispatch(updateOffline(offline)));
   }
 
@@ -125,3 +116,13 @@ class MyApp extends connect(store)(LitElement) {
 }
 
 window.customElements.define('my-app', MyApp);
+
+const buttonTemplate = (title = 'submit') => html`
+<button title="${title}">
+  Click
+  <div>
+<div>
+</div>
+  </div>
+</button>
+`

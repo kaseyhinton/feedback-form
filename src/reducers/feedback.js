@@ -1,15 +1,18 @@
-import { ADD_FEEDBACK } from '../actions/feedback.js';
+import {ADD_FEEDBACK} from '../actions/feedback.js';
 
-const feedback = (state = {feedback: []}, action) => {
-  switch (action.type) {
-    case ADD_FEEDBACK:
-      return {
-        ...state,
-          feedback: state.feedback.concat(action.feedback)
+const feedback =
+    (state = {
+      feedback: []
+    },
+     action) => {
+      switch (action.type) {
+        case ADD_FEEDBACK:
+          return {
+            ...state, feedback: state.feedback.concat(action.feedback)
+          }
+        default:
+          return state;
       }
-    default:
-      return state;
-  }
-};
+    };
 
 export default feedback;

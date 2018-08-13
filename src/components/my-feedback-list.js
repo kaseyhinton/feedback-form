@@ -22,7 +22,7 @@ class MyFeedbackList extends connect
 
   _render(props) {
     return html`
-     ${ComponentStyles}
+    ${ComponentStyles}
     <vaadin-progress-bar hidden?="${!props.isLoading}" indeterminate="${props.isLoading}" value="0"></vaadin-progress-bar>
     <section>
       <h2>List</h2>

@@ -4,17 +4,12 @@ import './my-feedback-list';
 import {html, LitElement} from '@polymer/lit-element';
 import {setPassiveTouchGestures} from '@polymer/polymer/lib/utils/settings.js';
 import {connect} from 'pwa-helpers/connect-mixin.js';
-import {updateMetadata} from 'pwa-helpers/metadata.js';
 import {installOfflineWatcher} from 'pwa-helpers/network.js';
-import {installRouter} from 'pwa-helpers/router.js';
 
-import {navigate, updateOffline} from '../actions/app.js';
+import {updateOffline} from '../actions/app.js';
 import {store} from '../store.js';
 
-class MyApp extends connect
-(store)(LitElement) {
-  _render({appTitle, _offline}) {
-    return html`
+const ComponentStyles = html`
     <style>
       :host {
         display: block;
@@ -29,39 +24,11 @@ class MyApp extends connect
         align-items: center;
         padding-left: 16px;
       }
-      
-      img {
-        width: 200px;
-        margin-right: 16px;
-      }
 
       h1 {
         color: var(--lumo-body-text-color);
         font-weight: 500;
         font-size: var(--lumo-font-size-xl);
-      }
-
-      .toolbar-list > a {
-        display: inline-block;
-        color: black;
-        text-decoration: none;
-        padding: 0 8px;
-      }
-
-      .toolbar-list > a[selected] {
-        font-weight: bold;
-      }
-
-      main {
-        display: block;
-      }
-
-      .page {
-        display: none;
-      }
-
-      .page[active] {
-        display: block;
       }
 
       footer {
@@ -71,20 +38,17 @@ class MyApp extends connect
         font-size: var(--lumo-font-size-s);
         text-align: center;
       }
-
-      @media (min-width: 460px) {
-        header {
-          flex-direction: row;
-        }
-
-        [main-title] {
-          padding-right: 0px;
-        }
-      }
     </style>
+    `
 
+class MyApp extends connect
+(store)(LitElement) {
+  _render({appTitle, _offline}) {
+    return html`
+    ${ComponentStyles}
     <header>
-      <h1>${appTitle}</h1>
+      <h1>${appTitle} SHAWN</h1>
+      hey
     </header>
 
     <main role="main" class="main-content">
@@ -104,9 +68,12 @@ class MyApp extends connect
     }
   }
 
+  constructor() {
+    super();
+    setPassiveTouchGestures(true);
+  }
+
   _firstRendered() {
-    // installRouter((location) =>
-    // store.dispatch(navigate(window.decodeURIComponent(location.pathname))));
     installOfflineWatcher((offline) => store.dispatch(updateOffline(offline)));
   }
 

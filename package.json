@@ -8,7 +8,9 @@
   "scripts": {
     "start": "webpack-dev-server --open --mode development",
     "build": "rm -rf dist && webpack --config webpack.config.js",
-    "serve": "polymer serve --port 3000 dist"
+    "serve": "polymer serve --port 3000 dist",
+    "start:parcel": "parcel index.html --open",
+    "build:parcel": "parcel build index.html"
   },
   "dependencies": {
     "@polymer/lit-element": "^0.5.2",
@@ -24,12 +26,16 @@
     "reselect": "^3.0.1"
   },
   "devDependencies": {
+    "babel-loader": "^7.1.4",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "html-webpack-plugin": "^3.2.0",
+    "parcel-bundler": "^1.9.7",
+    "polymer-cli": "^1.7.6",
+    "polyserve": "^0.27.0",
     "webpack": "^4.16.5",
     "webpack-cli": "^2.1.5",
-    "webpack-dev-server": "^3.1.4",
-    "html-webpack-plugin": "^3.2.0",
-    "babel-loader": "^7.1.4",
-    "polymer-cli": "^1.7.6",
-    "polyserve": "^0.27.0"
+    "webpack-dev-server": "^3.1.4"
   }
 }
